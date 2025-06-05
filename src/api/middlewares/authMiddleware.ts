@@ -3,7 +3,9 @@ import { AuthService } from "@infraestructure/services/AuthService";
 import { Request, Response, NextFunction } from "express";
 
 export function authenticateJWT(req: Request, _: Response, next: NextFunction) {
-    if (req.path === "/api/login") return next();
+    const path = req.path;
+
+    if (path === "/login") return next();
     const authHeader = req.headers.authorization;
 
     if (!authHeader?.startsWith("Bearer ")) throw new UnauthorizedException();

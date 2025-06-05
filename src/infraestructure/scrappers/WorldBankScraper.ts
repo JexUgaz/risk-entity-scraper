@@ -1,3 +1,4 @@
+import { SourceName } from "@domain/enums/SourceName";
 import { ScrappingResult } from "@domain/interfaces/ScrappingResult";
 import { ScrappingSource } from "@domain/interfaces/ScrappingSource";
 import { IScraper } from "@domain/services/IScraper";
@@ -5,6 +6,7 @@ import { Page } from "puppeteer";
 
 export class WorldBankScraper implements IScraper {
     constructor(private readonly page: Page) {}
+    sourceName: SourceName = SourceName.WORLD_BANK;
 
     async getData(query: string): Promise<ScrappingSource> {
         const searchUrl = `https://projects.worldbank.org/en/projects-operations/procurement/debarred-firms`;
@@ -19,7 +21,7 @@ export class WorldBankScraper implements IScraper {
         const finalResult = [...results1, ...results2];
 
         return {
-            name: "WORLD_BANK",
+            name: this.sourceName,
             hits: finalResult.length,
             results: finalResult,
         };

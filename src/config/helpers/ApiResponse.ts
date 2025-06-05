@@ -1,10 +1,11 @@
 import { AppException, InternalServerError } from "@config/exceptions/exceptions";
+import { ApiResponseStatus } from "@domain/enums/ApiResponseStatus";
 import { ErrorType } from "@domain/enums/ErrorType";
 import { match } from "ts-pattern";
 
 export interface IApiResponse<T = unknown> {
     message: string;
-    status: "success" | "error";
+    status: ApiResponseStatus;
     data?: T;
     error?: { type: ErrorType; details: string; code: number };
 }
@@ -12,7 +13,7 @@ export interface IApiResponse<T = unknown> {
 export class ApiResponse<T = unknown> implements IApiResponse<T> {
     public constructor(
         public readonly message: string,
-        public readonly status: "success" | "error",
+        public readonly status: ApiResponseStatus,
         public readonly data?: T,
         public readonly error?: { type: ErrorType; details: string; code: number },
     ) {}
@@ -20,7 +21,7 @@ export class ApiResponse<T = unknown> implements IApiResponse<T> {
     static success<T>(message: string, data: T): IApiResponse<T> {
         return {
             message,
-            status: "success",
+            status: ApiResponseStatus.SUCCESS,
             data,
         };
     }
@@ -39,7 +40,7 @@ export class ApiResponse<T = unknown> implements IApiResponse<T> {
 
         return {
             message: error.message,
-            status: "error",
+            status: ApiResponseStatus.ERROR,
             error: {
                 type: error.errorType,
                 details: error.details,

@@ -1,3 +1,4 @@
+import { SourceName } from "@domain/enums/SourceName";
 import { ScrappingResult } from "@domain/interfaces/ScrappingResult";
 import { ScrappingSource } from "@domain/interfaces/ScrappingSource";
 import { IScraper } from "@domain/services/IScraper";
@@ -5,6 +6,8 @@ import { Page } from "puppeteer";
 
 export class OfacScraper implements IScraper {
     constructor(private readonly page: Page) {}
+
+    sourceName: SourceName = SourceName.OFAC;
 
     async getData(query: string): Promise<ScrappingSource> {
         const searchUrl = `https://sanctionssearch.ofac.treas.gov/`;
@@ -33,7 +36,7 @@ export class OfacScraper implements IScraper {
         const results = await this.getTableResults();
 
         return {
-            name: "OFAC",
+            name: this.sourceName,
             hits: results.length,
             results: results,
         };

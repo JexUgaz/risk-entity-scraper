@@ -6,6 +6,7 @@ const {
     JWT_SECRET: jwtSecret = "no-secret",
     JWT_EXPIRES_IN: jwtExpiresIn = "1min",
     CHROME_EXECUTABLE_PATH: chromeExecutablePath = "no-path",
+    INTERNAL_SECRET_KEY: internalSecretKey = "no-internal-secret",
 } = process.env;
 
 export class Config {
@@ -13,4 +14,5 @@ export class Config {
     static readonly jwtSecret: string = jwtSecret;
     static readonly jwtExpiresIn: string = jwtExpiresIn;
     static readonly chromeExecutablePath: string = chromeExecutablePath;
+    static readonly internalSecretKey: string = internalSecretKey;
 }

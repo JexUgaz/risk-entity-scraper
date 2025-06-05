@@ -1,3 +1,4 @@
+import { SourceName } from "@domain/enums/SourceName";
 import { ScrappingResult } from "@domain/interfaces/ScrappingResult";
 import { ScrappingSource } from "@domain/interfaces/ScrappingSource";
 import { IScraper } from "@domain/services/IScraper";
@@ -5,6 +6,7 @@ import { Page } from "puppeteer";
 
 export class ICijScraper implements IScraper {
     constructor(private readonly page: Page) {}
+    sourceName: SourceName = SourceName.OFFSHORE_LEAKS;
 
     async getData(query: string): Promise<ScrappingSource> {
         const searchUrl = `https://offshoreleaks.icij.org/search?q=${encodeURIComponent(query)}&c=&j=&d=`;
@@ -38,7 +40,7 @@ export class ICijScraper implements IScraper {
         });
 
         return {
-            name: "OFFSHORE_LEAKS",
+            name: this.sourceName,
             hits: results.length,
             results: results,
         };

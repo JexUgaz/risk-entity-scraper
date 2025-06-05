@@ -1,7 +1,8 @@
+import { SourceName } from "@domain/enums/SourceName";
 import { ScrappingResult } from "./ScrappingResult";
 
 export interface ScrappingSource {
-    name: "OFAC" | "WORLD_BANK" | "OFFSHORE_LEAKS";
+    name: SourceName;
     hits: number;
     results: ScrappingResult[];
 }

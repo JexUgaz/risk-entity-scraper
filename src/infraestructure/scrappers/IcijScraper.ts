@@ -40,6 +40,7 @@ export class ICijScraper implements IScraper {
         });
 
         return {
+            url: searchUrl,
             name: this.sourceName,
             hits: results.length,
             results: results,

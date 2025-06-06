@@ -36,6 +36,7 @@ export class OfacScraper implements IScraper {
         const results = await this.getTableResults();
 
         return {
+            url: searchUrl,
             name: this.sourceName,
             hits: results.length,
             results: results,

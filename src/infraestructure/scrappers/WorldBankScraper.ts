@@ -21,6 +21,7 @@ export class WorldBankScraper implements IScraper {
         const finalResult = [...results1, ...results2];
 
         return {
+            url: searchUrl,
             name: this.sourceName,
             hits: finalResult.length,
             results: finalResult,

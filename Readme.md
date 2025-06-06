@@ -53,6 +53,14 @@ CHROME_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Ch
 
 ⚠️ On Linux, you may need to adjust the code in src/api/controllers/ScraperController.ts to properly locate the Chrome/Chromium executable.
 
+4. Add the internal secret key used to secure internal routes:
+
+```bash
+INTERNAL_SECRET_KEY=your_internal_secret_key
+```
+
+⚠️ Important: The INTERNAL_SECRET_KEY is required to access internal routes (such as /internal/screening). Only backends or services providing this exact secret can access these routes. Ensure that any backend calling this service uses the same INTERNAL_SECRET_KEY value.
+
 ## 🔧 Available Scripts
 
 ### Development

@@ -2,29 +2,27 @@ import { Request, Response } from "express";
 import { BadRequestException } from "@config/exceptions/exceptions";
 import { IRiskEntitySearcher } from "@domain/services/IRiskEntitySearcher";
 import { RiskEntitySearcher } from "@infraestructure/services/RiskEntitySearcher";
-import puppeteer from "puppeteer-extra";
-import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import puppeteer from "puppeteer";
 import { ApiResponse } from "@config/helpers";
-import { Config } from "@config/config";
 import { SourceName } from "@domain/enums/SourceName";
+import { Config } from "@config/config";
 
 class ScrapperController {
     public static async searchByName(req: Request, res: Response) {
         const { name } = req.query;
 
         if (!name || typeof name !== "string") {
-            throw new BadRequestException('El parámetro "name" es requerido y debe ser un string.');
+            throw new BadRequestException('The "name" parameter is required and must be a string.');
         }
 
         const sources = ScrapperController.getSourcesFilter(
             req.query.sources as undefined | string,
         );
 
-        puppeteer.use(StealthPlugin());
         const browser = await puppeteer.launch({
             headless: true,
-            args: ["--no-sandbox"],
             executablePath: Config.chromeExecutablePath,
+            args: ["--no-sandbox", "--disable-setuid-sandbox"],
         });
 
         const pages = await Promise.all([browser.newPage(), browser.newPage()]);

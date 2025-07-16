@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { ApiResponse } from "@config/helpers";
 import { getUsers } from "@data/users";
 import { BadRequestException, UnauthorizedException } from "@config/exceptions/exceptions";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { AuthService } from "@infraestructure/services/AuthService";
 import { IAuthService } from "@domain/services/IAuthService";
 

@@ -34,7 +34,7 @@ export class ApiResponse<T = unknown> implements IApiResponse<T> {
             )
             .when(
                 (e): e is Error => e instanceof Error,
-                (e) => new InternalServerError(e.message),
+                (e) => new InternalServerError(e.stack ?? e.message),
             )
             .otherwise((e) => new InternalServerError("Unknown error: " + JSON.stringify(e)));
 

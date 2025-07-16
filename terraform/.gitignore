@@ -1,0 +1,6 @@
+.terraform/
+
+terraform.tfvars
+ec2_risk_scraper
+terraform.tfstate
+terraform.tfstate.backup

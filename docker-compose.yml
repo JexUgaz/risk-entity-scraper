@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+    app:
+        container_name: risk-entity-scraper
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: risk-entity-scraper-image
+        ports:
+            - "3000:3000"
+        env_file:
+            - .env.production

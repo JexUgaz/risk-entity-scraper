@@ -76,3 +76,10 @@ export class JwtVerificationException extends UnauthorizedException {
         this.name = "JwtVerificationException";
     }
 }
+
+export class UserNotFoundException extends UnauthorizedException {
+    constructor(details: string = "The user associated with this token does not exist.") {
+        super(details);
+        this.name = "UserNotFoundException";
+    }
+}

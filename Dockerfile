@@ -25,8 +25,8 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 COPY package.json ./
-COPY pnpm-lock.yaml ./
-RUN npm install -g pnpm@10.6.1 && pnpm install --prod --frozen-lockfile
+COPY package-lock.json ./
+RUN npm ci --omit=dev
 
 COPY dist ./dist
 

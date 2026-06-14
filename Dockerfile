@@ -1,5 +1,6 @@
 FROM node:20-slim
 
+# Instalar Chromium y dependencias necesarias
 RUN apt-get update && apt-get install -y \
     chromium \
     fonts-liberation \
@@ -22,12 +23,18 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV CHROME_EXECUTABLE_PATH=/usr/bin/chromium
+
 WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
+COPY package.json package-lock.json ./
+
 RUN npm ci --omit=dev
 
 COPY dist ./dist
 
-CMD ["node", "dist/app.js"]
+ENV PORT=10000
+EXPOSE 10000
+
+CMD ["node", "--max-old-space-size=512", "dist/app.js"]

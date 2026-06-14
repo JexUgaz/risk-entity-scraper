@@ -22,7 +22,7 @@ class ScrapperController {
         const browser = await puppeteer.launch({
             headless: true,
             executablePath: Config.chromeExecutablePath,
-            args: ["--no-sandbox", "--disable-setuid-sandbox"],
+            args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
         });
 
         const pages = await Promise.all([browser.newPage(), browser.newPage()]);

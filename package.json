@@ -1,7 +1,7 @@
 {
     "name": "risk-entity-scraper",
     "scripts": {
-        "dev": "pnpm run build && nodemon --watch src --exec tsx src/index.ts",
+        "dev": "pnpm run build && pnpm run start",
         "docker": "docker compose up --build",
         "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --outfile=dist/app.js --minify --tree-shaking=true --sourcemap",
         "start": "node dist/app.js"

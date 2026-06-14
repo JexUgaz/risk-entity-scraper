@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({ path: "./env.local" });
+dotenv.config({ path: "./.env.local" });
 
 const {
     PORT: port = "3000",
@@ -10,7 +10,7 @@ const {
 } = process.env;
 
 export class Config {
-    static readonly port: number = parseInt(port, 10);
+    static readonly port: number = Number.parseInt(port, 10);
     static readonly jwtSecret: string = jwtSecret;
     static readonly jwtExpiresIn: string = jwtExpiresIn;
     static readonly chromeExecutablePath: string = chromeExecutablePath;

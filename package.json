@@ -49,5 +49,11 @@
         "@config": "lib/config",
         "@api": "lib/api"
     },
-    "private": true
+    "private": true,
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "esbuild",
+            "puppeteer"
+        ]
+    }
 }

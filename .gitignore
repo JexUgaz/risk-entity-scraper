@@ -10,7 +10,6 @@ typings/
 
 # Node.js dependency directory
 node_modules/
-pnpm-lock.yaml
 *.local
 .env
 .env.local

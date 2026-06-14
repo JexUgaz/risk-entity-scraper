@@ -22,22 +22,33 @@ class ScrapperController {
         const browser = await puppeteer.launch({
             headless: true,
             executablePath: Config.chromeExecutablePath,
-            args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
+            args: [
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--single-process",
+                "--no-zygote",
+            ],
         });
 
-        const pages = await Promise.all([browser.newPage(), browser.newPage()]);
+        const page1 = await browser.newPage();
+        const page2 = await browser.newPage();
+        try {
+            const searcherService: IRiskEntitySearcher = new RiskEntitySearcher([page1, page2]);
 
-        const searcherService: IRiskEntitySearcher = new RiskEntitySearcher(pages);
+            const scrappingResponse = await searcherService.search(name, sources);
 
-        const scrappingResponse = await searcherService.search(name, sources);
+            const message =
+                scrappingResponse.totalHits === 0
+                    ? `No results found for '${name}' in selected sources.`
+                    : "Search completed successfully.";
+            const response = ApiResponse.success(message, scrappingResponse);
 
-        const message =
-            scrappingResponse.totalHits === 0
-                ? `No results found for '${name}' in selected sources.`
-                : "Search completed successfully.";
-        const response = ApiResponse.success(message, scrappingResponse);
-
-        res.json(response);
+            res.json(response);
+        } finally {
+            await page1.close();
+            await page2.close();
+        }
     }
 
     private static getSourcesFilter(data?: undefined | string): SourceName[] {

@@ -28,11 +28,15 @@ export class RiskEntitySearcher implements IRiskEntitySearcher {
         entityName: string,
         sources: SourceName[],
     ): Promise<ScrappingSource[]> {
-        const promises = this.scrappers
-            .filter((s) => sources.includes(s.sourceName))
-            .map((s) => s.getData(entityName));
+        const responses: ScrappingSource[] = [];
 
-        const responses = await Promise.all(promises);
-        return responses.filter((source) => source.hits > 0);
+        for (const scraper of this.scrappers) {
+            if (!sources.includes(scraper.sourceName)) continue;
+
+            const result = await scraper.getData(entityName);
+            if (result.hits > 0) responses.push(result);
+        }
+
+        return responses;
     }
 }
